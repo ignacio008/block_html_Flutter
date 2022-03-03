@@ -3,10 +3,14 @@ import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:provider/provider.dart';
 import 'package:z06_blocks_notess/home.dart';
 import 'package:z06_blocks_notess/provider/paint_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
-
-void main() => runApp(MyApp());
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override

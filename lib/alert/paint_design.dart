@@ -28,6 +28,8 @@ class _PaintDesignState extends State<PaintDesign> {
     PaintProvider paintProviderVisibility =
         Provider.of<PaintProvider>(context, listen: true);
     return AlertDialog(
+      
+      
         contentPadding: const EdgeInsets.fromLTRB(2.0, 2.0, 2.0, 2.0),
         title: const Text("Dibujar"),
         content: Container(
@@ -67,7 +69,7 @@ class _PaintDesignState extends State<PaintDesign> {
             onPressed: () {
               convertCanvasToB64();
               if (kIsWeb) {
-                paintProviderVisibility.changeView(nuevoShowDialog);
+               
               }
             },
           ),
@@ -93,10 +95,15 @@ class _PaintDesignState extends State<PaintDesign> {
     String html3 = "<img src=\"${base64Image}\" style=\" width:25% \" </img>";
 
     if (kIsWeb) {
-      widget.changeView(nuevoShowDialog);
+      widget.controller.insertHtml(html3);
+      print("se hizo");
+    }else{
+      widget.controller.insertHtml(html3);
     }
 
-    widget.controller.insertHtml(html3);
+    
+
+    
     print(html3);
     Navigator.pop(context);
 

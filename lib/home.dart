@@ -9,8 +9,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:z06_blocks_notess/alert/container_paint.dart';
 import 'package:z06_blocks_notess/alert/paint.dart';
 import 'package:z06_blocks_notess/alert/paint_design.dart';
+import 'package:z06_blocks_notess/alert/show_option_sticker.dart';
 import 'package:z06_blocks_notess/painter.dart';
 
 import 'dart:ui' as ui;
@@ -85,7 +87,7 @@ class _home1State extends State<home1> {
                 controller.clear();
               },
            padding: EdgeInsets.only(left:20,top:17, right:20, bottom:17),
-            child: Text("Limpiar"),
+            child: const Text("Limpiar Todo"),
             
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -115,19 +117,8 @@ class _home1State extends State<home1> {
               width: 16,
             ),
 
-            FlatButton(
-               color:Colors.blue,
-                 onPressed: () {
-                   controller.setFullScreen();  
-                  },
-           padding: const EdgeInsets.only(left:20,top:17, right:20, bottom:17),
-            child: const Text("Panlla completa", style:TextStyle(color:Colors.white)),            
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),    
-            ),
-            ),
+            
               ]),
-
               const SizedBox(
               height: 15,
             ),
@@ -135,13 +126,30 @@ class _home1State extends State<home1> {
                mainAxisAlignment: MainAxisAlignment.center,
               children: [
 
+                kIsWeb?
+                
+                ContainerPaint(controller,changeView)
+
+
+                :
+
+                Container(),
+
+
+
+
+
+                
+                const SizedBox(width: 30),
                 TextButton(
                   style: TextButton.styleFrom(backgroundColor: Colors.blue),
                   onPressed: () {
-                    controller.insertHtml(
-                        "<input type=\"image\"  src=\"https://www.qries.com/images/banner_logo.png\" style=\"color: blue \">Google in blue</input>");
+                    // controller.insertHtml(
+                    //     "<input type=\"image\"  src=\"https://www.qries.com/images/banner_logo.png\" style=\"color: blue \">Google in blue</input>");
+
+                  mostrarSticker(context, controller);
                   },
-                  child: const Text("Insertar HTML",
+                  child: const Text("Insertar Sticker",
                       style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(width: 30),
@@ -158,13 +166,13 @@ class _home1State extends State<home1> {
                       style: TextStyle(color: Colors.white)),
                 ),
                 const SizedBox(width: 30),
-                TextButton(
+               kIsWeb?Container(): TextButton(
                   style: TextButton.styleFrom(backgroundColor: Colors.blue),
                   onPressed: () {
                     setState(() {
                       //provider
                       if (kIsWeb) {
-                        paintProviderVisibility.showingDialog = true;
+                       // paintProviderVisibility.showingDialog = true;
                       }
                     });
                     mostrarPaint(context, controller, );
@@ -274,5 +282,16 @@ class _home1State extends State<home1> {
       controller.insertHtml(html2);
       print(html2);
     }
+  }
+
+  void mostrarSticker(BuildContext context, HtmlEditorController controller) {
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return ShowOptionSticker(controller);
+        });
+
+
   }
 }
